@@ -1,0 +1,21 @@
+class GeometryDash 
+{
+    constructor GeometryDash new() 
+    {
+        return this;
+    }
+
+    method void run()
+    {
+        var int a;
+        let a = 10;
+        do Output.printInt(a);
+        return;
+    }
+
+    method void dispose()
+    {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

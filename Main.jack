@@ -1,0 +1,9 @@
+class Main {
+    function void main () {
+        var GeometryDash game;
+        let game = GeometryDash.new();
+        do game.run();
+        do game.dispose();
+        return;
+    }
+}
