@@ -18,6 +18,7 @@ class GeometryDash
         var int MapSpeed;
 
         var Cube cube;
+        var Spike spike;
 
         let MapSpeed = 24;
         let Timer = 0;
@@ -25,6 +26,7 @@ class GeometryDash
         let player = Player.new(128, 159, 48);
         let floor = Floor.new(207, MapSpeed);
         let cube = Cube.new(400, 159, 48, MapSpeed);
+        let spike = Spike.new(400, 159-48, 48, MapSpeed);
 
         do floor.update();
         do player.update();
@@ -46,6 +48,7 @@ class GeometryDash
                 do player.update();
                 do floor.update();
                 do cube.update();
+                do spike.update();
                 if (checkContact(player, cube))
                 {
                     let GameRun = false;
