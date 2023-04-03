@@ -1,0 +1,11 @@
+class Remains 
+{
+    function int getRemains (int divid, int divider) 
+    {
+        var int division;
+        var int remains;
+        let division = divid/divider;
+        let remains = divid-(division*divider);
+        return remains;
+    }
+}
