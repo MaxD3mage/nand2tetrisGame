@@ -1,0 +1,89 @@
+class GeometryDash 
+{
+    field boolen GameRun;
+
+    constructor GeometryDash new() 
+    {
+        let GameRun = true;
+        return this;
+    }
+
+    method void run()
+    {
+        var Floor floor;
+        var Player player;
+        var int InputKey;
+        var int Timer;
+        var int TimerUpdate;
+        var int MapSpeed;
+
+        var Cube cube;
+
+        let MapSpeed = 24;
+        let Timer = 0;
+        let TimerUpdate = 4500;
+        let player = Player.new(128, 159, 48);
+        let floor = Floor.new(207, MapSpeed);
+        let cube = Cube.new(400, 159, 48, MapSpeed);
+
+        do floor.update();
+        do player.update();
+
+        while (GameRun)
+        {
+            let InputKey = Keyboard.keyPressed();
+            if (InputKey = 140)
+            {
+                let GameRun = false;
+            }
+            if (InputKey = 131)
+            {
+                do player.jump(50);
+            }
+            if (Timer = TimerUpdate) // Sys.wait() плохо оптимизирован и он создаёт много артефактов при отрисовке
+            {
+                do Screen.clearScreen();
+                do player.update();
+                do floor.update();
+                do cube.update();
+                if (checkContact(player, cube))
+                {
+                    let GameRun = false;
+                }
+                let Timer = 0;
+            }
+            let Timer = Timer + 1;
+        }
+
+        do floor.dispose();
+        do player.dispose();
+        //do Screen.clearScreen();
+        return;
+    }
+
+    method boolen checkContact(Player player, Cube cube)
+    {
+        var int pS;
+        var int pX;
+        var int pY;
+        var int cS;
+        var int cX;
+        var int cY;
+
+        let pS = player.getSize();
+        let pX = player.getCoordX();
+        let pY = player.getCoordY();
+        let cS = cube.getSize();
+        let cX = cube.getCoordX();
+        let cY = cube.getCoordY();
+
+
+        return ((pX+48 > cX) & (pX < cX) & (pY+48 > cY));
+    }
+
+    method void dispose()
+    {
+        do Memory.deAlloc(this);
+        return;
+    }
+}
