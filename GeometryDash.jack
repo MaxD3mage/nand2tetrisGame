@@ -10,20 +10,25 @@ class GeometryDash
 
     method void run()
     {
-        var Floor floor;
-        var Player player;
         var int InputKey;
+        var int Ticks;
+        var int TicksLimit;
         var int Timer;
-        var int TimerUpdate;
         var int MapSpeed;
 
+        var Player player;
+        var UI ui;
+        var Floor floor;
         var Cube cube;
         var Spike spike;
 
         let MapSpeed = 24;
+        let Ticks = 0;
+        let TicksLimit = 4500;
         let Timer = 0;
-        let TimerUpdate = 4500;
+
         let player = Player.new(128, 159, 48);
+        let ui = UI.new();
         let floor = Floor.new(207, MapSpeed);
         let cube = Cube.new(400, 159, 48, MapSpeed);
         let spike = Spike.new(400, 159-48, 48, MapSpeed);
@@ -34,28 +39,31 @@ class GeometryDash
         while (GameRun)
         {
             let InputKey = Keyboard.keyPressed();
-            if (InputKey = 140)
+            if ((InputKey = 140) | (InputKey = 81))
             {
                 let GameRun = false;
             }
-            if (InputKey = 131)
+            if ((InputKey = 131) | (InputKey = 32) | (InputKey = 87))
             {
                 do player.jump(50);
             }
-            if (Timer = TimerUpdate) // Sys.wait() плохо оптимизирован и он создаёт много артефактов при отрисовке
+            if (Ticks = TicksLimit) // Sys.wait() плохо оптимизирован и он создаёт много артефактов при отрисовке
             {
                 do Screen.clearScreen();
                 do player.update();
+                do ui.update();
                 do floor.update();
                 do cube.update();
                 do spike.update();
-                if (checkContact(player, cube))
+                if (checkCubeContact(player, cube))
                 {
-                    let GameRun = false;
+                    do ui.addAttempt();
+                    let Timer = 0;
                 }
-                let Timer = 0;
+                let Ticks = 0;
+                let Timer = Timer + 1;
             }
-            let Timer = Timer + 1;
+            let Ticks = Ticks + 1;
         }
 
         do floor.dispose();
@@ -64,7 +72,7 @@ class GeometryDash
         return;
     }
 
-    method boolen checkContact(Player player, Cube cube)
+    method boolen checkCubeContact(Player player, Cube cube)
     {
         var int pS;
         var int pX;
@@ -80,8 +88,7 @@ class GeometryDash
         let cX = cube.getCoordX();
         let cY = cube.getCoordY();
 
-
-        return ((pX+48 > cX) & (pX < cX) & (pY+48 > cY));
+        return ~((pY > (cY+cS)) | ((pY+pS) < cY) | ((pX+pS) < cX) | (pX > (cX+cS)));
     }
 
     method void dispose()

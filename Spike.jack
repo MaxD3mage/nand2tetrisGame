@@ -26,6 +26,9 @@ class Spike
 
     method void draw() {
         do Screen.setColor(true);
+        do Screen.drawLine(CoordX, CoordY+Size, CoordX+Size, CoordY+Size);  // _
+        do Screen.drawLine(CoordX+1, CoordY+Size-1, CoordX+Size-1, CoordY+Size-1);
+        
         do Screen.drawLine(CoordX+(Size/2), CoordY, CoordX+Size, CoordY+Size); // \
         do Screen.drawLine(CoordX+(Size/2), CoordY+1, CoordX+Size-1, CoordY+Size);
 
