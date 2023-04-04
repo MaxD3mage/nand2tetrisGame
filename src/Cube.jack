@@ -14,14 +14,14 @@ class Cube
         return this;
     }
 
-    method void update() {
+    method boolen update() {
         let CoordX = CoordX - Speed;
         if (CoordX < 0)
         {
-            let CoordX = 511-Size;
+            return true;
         }
         do draw();
-        return;
+        return false;
     }
 
     method void draw() {
@@ -46,6 +46,10 @@ class Cube
     method int getSize()
     {
         return Size;
+    }
+
+    method Cube copy () {
+        return Cube.new(CoordX, CoordY, Size, Speed);
     }
 
     method void dispose()

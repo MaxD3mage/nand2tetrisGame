@@ -1,0 +1,133 @@
+class UI 
+{
+    field int AttemptsCounter;
+    field int ProgressBarLength;
+    field int ProgressBar;
+    field int WinTime;
+
+    constructor UI new(int winTime) 
+    {
+        let AttemptsCounter = 0;
+        let ProgressBarLength = 200;
+        let ProgressBar = 0;
+        let WinTime = winTime;
+        return this;
+    }
+
+    method void update(int Timer) 
+    {
+        if (Timer < 40)
+        {
+            do drawAttempt(3213);
+            do Output.moveCursor(9,36);
+            do Output.printInt(AttemptsCounter);
+        }
+        let ProgressBar = Timer * (ProgressBarLength/100) / (WinTime/100);
+        if (ProgressBar > ProgressBarLength)
+        {
+            let ProgressBar = ProgressBarLength;
+        }
+
+        do drawProgressBar(5, 2, 10);
+        return;
+    }
+
+    method void drawProgressBar(int barHeight, int frameHeight, int topStep)
+    {
+        var int x1;
+        var int x2;
+        var int ts;
+        var int bh;
+        var int fh;
+
+        let bh = barHeight;
+        let fh = frameHeight;
+        let x1 = (512/2-1) - (ProgressBarLength/2);
+        let x2 = ProgressBar + x1;
+        let ts = topStep;
+
+        do Screen.drawRectangle(x1 - (2*fh), ts - (2*fh), x1 + ProgressBarLength + (2*fh), ts + bh + (2*fh));
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x1 - fh, ts - fh, x1 + ProgressBarLength + fh, ts + bh + fh);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x1, ts, x2, ts + bh);
+        return;
+    }
+
+    method void drawAttempt(int location) 
+    {
+        var int memAddress; 
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress, 32655);
+        do Memory.poke(memAddress +32, 3097);
+        do Memory.poke(memAddress +64, 3097);
+        do Memory.poke(memAddress +96, 3120);
+        do Memory.poke(memAddress +128, 3120);
+        do Memory.poke(memAddress +160, 3126);
+        do Memory.poke(memAddress +192, 3129);
+        do Memory.poke(memAddress +224, 3120);
+        do Memory.poke(memAddress +256, 3120);
+        do Memory.poke(memAddress +288, 3120);
+        // column 1
+        do Memory.poke(memAddress +1, 32511);
+        do Memory.poke(memAddress +33, 1560);
+        do Memory.poke(memAddress +65, 1560);
+        do Memory.poke(memAddress +97, 1560);
+        do Memory.poke(memAddress +129, 32280);
+        do Memory.poke(memAddress +161, 1560);
+        do Memory.poke(memAddress +193, 1560);
+        do Memory.poke(memAddress +225, 1560);
+        do Memory.poke(memAddress +257, 1560);
+        do Memory.poke(memAddress +289, 32280);
+        // column 2
+        do Memory.poke(memAddress +2, -1652);
+        do Memory.poke(memAddress +34, 7054);
+        do Memory.poke(memAddress +66, 7134);
+        do Memory.poke(memAddress +98, 7030);
+        do Memory.poke(memAddress +130, -1242);
+        do Memory.poke(memAddress +162, 6918);
+        do Memory.poke(memAddress +194, 6918);
+        do Memory.poke(memAddress +226, 6918);
+        do Memory.poke(memAddress +258, 6918);
+        do Memory.poke(memAddress +290, 6918);
+        // column 3
+        do Memory.poke(memAddress +3, -6151);
+        do Memory.poke(memAddress +35, 12483);
+        do Memory.poke(memAddress +67, 12483);
+        do Memory.poke(memAddress +99, 12483);
+        do Memory.poke(memAddress +131, -7999);
+        do Memory.poke(memAddress +163, -16192);
+        do Memory.poke(memAddress +195, 192);
+        do Memory.poke(memAddress +227, 192);
+        do Memory.poke(memAddress +259, 12480);
+        do Memory.poke(memAddress +291, -8000);
+        // column 4
+        do Memory.poke(memAddress +4, 1);
+        do Memory.poke(memAddress +36, 51);
+        do Memory.poke(memAddress +68, 48);
+        do Memory.poke(memAddress +132, 1);
+        do Memory.poke(memAddress +164, 3);
+        do Memory.poke(memAddress +196, 3);
+        do Memory.poke(memAddress +228, 51);
+        do Memory.poke(memAddress +260, 51);
+        do Memory.poke(memAddress +292, 1);
+        // column -1
+        do Memory.poke(memAddress +31, ~32767);
+        do Memory.poke(memAddress +63, ~32767);
+        do Memory.poke(memAddress +95, -16384);
+        do Memory.poke(memAddress +127, -16384);
+        do Memory.poke(memAddress +159, -16384);
+        do Memory.poke(memAddress +191, -16384);
+        do Memory.poke(memAddress +223, -16384);
+        do Memory.poke(memAddress +255, -16384);
+        do Memory.poke(memAddress +287, -16384);
+        return;
+    }
+
+    method void addAttempt() 
+    {
+        let AttemptsCounter = AttemptsCounter + 1;
+        return;
+    }
+}
