@@ -16,6 +16,7 @@ class Player
         return this;
     }
 
+    // Прыжок и его блокировка
     method void jump(int force) {
         if (CoordY = StartCoordY)
         {
@@ -61,6 +62,7 @@ class Player
         return;
     }
 
+    // Рисует нереально мужественного дракона
     method void draw(int location) {
         var int memAddress; 
         let memAddress = 16384+location;

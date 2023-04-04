@@ -32,6 +32,7 @@ class UI
         return;
     }
 
+    // Рисует линию прогресса
     method void drawProgressBar(int barHeight, int frameHeight, int topStep)
     {
         var int x1;
@@ -54,6 +55,7 @@ class UI
         return;
     }
 
+    // Рисует красивую крупную надпись "Attempts:"
     method void drawAttempt(int location) 
     {
         var int memAddress; 
