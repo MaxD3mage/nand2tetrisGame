@@ -147,7 +147,7 @@ class GeometryDash
                 // Условие победы
                 if (Timer = WInTime)
                 {
-                    do Output.moveCursor(7,30);
+                    do Output.moveCursor(7,28);
                     do Output.printString("You win!");
                     let GameRun = false;
                 }
@@ -158,7 +158,6 @@ class GeometryDash
 
         do floor.dispose();
         do player.dispose();
-        do Screen.clearScreen();
         return;
     }
 

@@ -322,7 +322,7 @@ if-goto IF_TRUE7
 goto IF_FALSE7
 label IF_TRUE7
 push constant 7
-push constant 30
+push constant 28
 call Output.moveCursor 2
 pop temp 0
 push constant 8
@@ -360,8 +360,6 @@ call Floor.dispose 1
 pop temp 0
 push local 1
 call Player.dispose 1
-pop temp 0
-call Screen.clearScreen 0
 pop temp 0
 push constant 0
 return
